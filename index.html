@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio Website">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-line"></div>
+                <div class="nav-links">
+                    <a href="#about" class="nav-link active cursor-target" data-section="about">about</a>
+                    <a href="#projects" class="nav-link cursor-target" data-section="projects">projects</a>
+                </div>
+            </div>
+            
+            <div class="social-section">
+                <div class="social-icons">
+                    <a href="#" class="social-icon cursor-target" aria-label="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon cursor-target" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon cursor-target" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon cursor-target" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+                <div class="social-line"></div>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <!-- About Section -->
+            <div class="notes-container" id="about-section">
+                <div class="note">
+                    <p class="note-text">Hey, I'm Pravin, <span class="locked-on"><strong>19 years old</strong></span>, originally from <span class="locked-on"><strong>Nepal</strong></span> and now a <span class="locked-on"><strong>Computer Science</strong></span> student @ <span class="locked-on"><strong>University of Waterloo</strong></span>. I wrote my <span class="locked-on"><strong>first line of code at 9 in Lua</strong></span> while messing around in Roblox Studio, and I've been chasing that build-something-from-nothing feeling ever since. From grinding my way to <span class="locked-on"><strong>top-20 globally</strong></span>  in Pokémon Brick Bronze as a kid to now shipping projects that have reached millions of views, I’ve always chased the next thing that obsessed me.</p>
+                </div>
+                
+                <div class="note">
+                    <p class="note-text">Life's thrown some real curveballs, and I've kept moving anyway, including <span class="locked-on"><strong>beating cancer at 17</strong></span> and pushing through a major surgery while staying locked in on school, friends, and whatever I was building next. These days I'm a <span class="locked-on"><strong>SWE Intern @Inductive Solutions</strong></span> and if I'm not on the clock, I'm probably at a hackathon or deep in a side quest.</p>
+                </div>
+                
+                <div class="note">
+                    <p class="note-text">If you're into ambitious builds, a little controlled chaos, and a lot of fun along the way, we'll surely get along.</p>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="projects-container" id="projects-section" style="display: none;">
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/YuvDwi/Steve" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Steve
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Cursor for Minecraft</p>
+                    <p class="project-description">Java Forge mod that turns natural-language prompts into coordinated in-game workers that mine, build, and automate tasks, reaching <span class="locked-on"><strong>5M+ views</strong></span> and <span class="locked-on"><strong>900+ GitHub Stars</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/Spellcast-Agent" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Spellcast Agent
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Computer vision Boggle solver</p>
+                    <p class="project-description">AI agent that screenshares the Spellcast board, runs a custom YOLOv8 OCR model and pathfinding to play high-scoring words in real time, with <span class="locked-on"><strong>99.5% mAP@0.5</strong></span> and <span class="locked-on"><strong>48%</strong></span> higher accuracy than pytesseract.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="#" class="project-title cursor-target">
+                            Quiry
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Search for a Discord memory</p>
+                    <p class="project-description">RAG-powered system with <span class="locked-on"><strong>Rust</strong></span> microservices, Kafka, Pinecone, and Elasticsearch that ingests chats and turns messy Discord history into sub-second semantic search and Q&A.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/Versus" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Versus
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">UFC for language models</p>
+                    <p class="project-description">Letta-powered arena where LLMs trash-talk and battle in games like Battleship, Trivia, and Wordle over WebSockets, complete with post-fight, voice-synth "interviews" for highlight-reel moments. <span class="locked-on"><strong>Finalist for UC Hack Berkeley</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/DealyDigests" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            DealyDigests
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Smart credit card optimizer</p>
+                    <p class="project-description">Dashboard that analyzes real transaction streams to recommend the best card and merchant for each purchase, earning a $55,000 non-dilutive funding offer. <span class="locked-on"><strong>Winner at HackPrinceton</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/ThreadIt" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            ThreadIt
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">AI fashion studio for Shopify</p>
+                    <p class="project-description">Interactive sketch-to-storefront tool where users draw on garment templates, generate production-ready mockups with diffusion models, and one-click publish product pages to Shopify. <span class="locked-on"><strong>Finalist at AgentHacks</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/Lovely" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Lovely
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">AI dating co-pilot</p>
+                    <p class="project-description">Agentic system that automates texting, call prep, and in-date coaching using vector memories and RAG (including Meta smart-glasses integration) so users get social "superpowers" without losing their own voice.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/dotpush" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            dotpush
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Auto-commit LeetCode to GitHub</p>
+                    <p class="project-description">Chrome extension that detects solved LeetCode problems in the browser and instantly pushes clean, organized solutions into a GitHub repo, now used by <span class="locked-on"><strong>150+ programmers</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/ChessEngine" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Chess Engine
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Minimalist engine, real games</p>
+                    <p class="project-description">Custom chess engine experiment in <span class="locked-on"><strong>C++</strong></span> focused on clean board representation, legal move generation, and basic search/evaluation so you can play full games against your own logic instead of a black-box engine.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/Incident-Reporter" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Incident Reporter
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Lightweight incident command center</p>
+                    <p class="project-description">Web tool built in <span class="locked-on"><strong>Ruby</strong></span> with Redis for logging incidents with timeline, severity, and root cause, then exporting structured reports so teams can review what happened and standardize follow-ups.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="#" class="project-title cursor-target">
+                            MemoAR
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Statue museum in your camera</p>
+                    <p class="project-description">AR experience that lets users point their phone at statues to see animated characters, timelines, and context overlays, turning passive city landmarks into interactive mini-museums. <span class="locked-on"><strong>Winner at Zapparthon</strong></span>.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <a href="https://github.com/pravinl23/Boids-Flocking-Simulator" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
+                            Flockings Simulator
+                            <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="project-tagline">Playground for emergent swarms</p>
+                    <p class="project-description">Real-time visual simulator of flocking behavior where thousands of agents follow simple local rules (separation, alignment, cohesion) to produce complex, satisfying swarm patterns you can tweak live.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script src="cursor.js"></script>
+</body>
+</html>
