@@ -73,6 +73,8 @@ function initNavigation() {
     if (!navLinks.length || !aboutSection || !projectsSection) return;
 
     function showSection(section) {
+        const gameColumn = document.querySelector('.game-column');
+        
         // Hide all sections
         aboutSection.style.display = 'none';
         projectsSection.style.display = 'none';
@@ -80,8 +82,12 @@ function initNavigation() {
         // Show selected section
         if (section === 'about') {
             aboutSection.style.display = 'flex';
+            // Remove fixed positioning for about page
+            if (gameColumn) gameColumn.classList.remove('fixed-center');
         } else if (section === 'projects') {
             projectsSection.style.display = 'flex';
+            // Add fixed positioning for projects page
+            if (gameColumn) gameColumn.classList.add('fixed-center');
         }
         
         // Update active state on all links
