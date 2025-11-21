@@ -73,6 +73,97 @@ async function checkRateLimit(ip) {
     }
 }
 
+// Profanity filter - blocks inappropriate names
+function containsProfanity(text) {
+    if (!text || typeof text !== 'string') return false;
+    
+    // Normalize text: lowercase, remove spaces, replace common character substitutions
+    const normalized = text.toLowerCase()
+        .replace(/\s+/g, '')
+        .replace(/[@4]/g, 'a')
+        .replace(/[3]/g, 'e')
+        .replace(/[1!|]/g, 'i')
+        .replace(/[0]/g, 'o')
+        .replace(/[5$]/g, 's')
+        .replace(/[7]/g, 't')
+        .replace(/[+]/g, 't');
+    
+    // Comprehensive profanity list (common inappropriate words)
+    // Note: Character substitutions are normalized above (3→e, 1→i, 4→a, 0→o, 5/$/→s, etc.)
+    // So "s3x" becomes "sex", "n1gg4" becomes "nigga", "a$$" becomes "ass", etc.
+    const profanityList = [
+        // F-word variations
+        'fuck', 'fuk', 'fck', 'fuq', 'phuck', 'phuk', 'fuc', 'fuk',
+        'fucked', 'fucker', 'fucking', 'fucks', 'motherfucker', 'mfer',
+        
+        // S-word variations
+        'shit', 'sht', 'shyt', 'shite', 'shitty', 'bullshit', 'bs',
+        
+        // A-word variations
+        'ass', 'azz', 'arse', 'asshole', 'asswipe', 'asshat', 'badass',
+        
+        // B-word variations
+        'bitch', 'biatch', 'biotch', 'btch', 'bitches', 'bitchy',
+        
+        // C-word variations
+        'cunt', 'cnt', 'cock', 'cok', 'kock', 'cocks', 'cocker',
+        
+        // D-word variations
+        'dick', 'dik', 'dck', 'dickhead', 'dicks', 'damn', 'dammit',
+        'damned', 'damnit',
+        
+        // Other profanity
+        'bastard', 'bstrd', 'pussy', 'puss', 'psy', 'whore', 'hor',
+        'slut', 'slt', 'piss', 'pissed', 'crap', 'crappy', 'douche',
+        'douchebag', 'tits', 'titties', 'boobs', 'boobies', 'penis',
+        'vagina', 'balls', 'testicle', 'scrotum', 'anus', 'anal',
+        
+        // Sexual content
+        'sex', 'sexy', 'porn', 'pron', 'prn', 'porno', 'xxx', 'nsfw',
+        'nude', 'naked', 'rape', 'raping', 'rapist', 'molest', 'pedophile',
+        'pedo', 'milf', 'dilf', 'hentai', 'orgasm', 'masturbate', 'horny',
+        
+        // Slurs - racial
+        'nigger', 'nigga', 'nig', 'negro', 'coon', 'chink', 'gook',
+        'spic', 'wetback', 'beaner', 'kike', 'towelhead', 'sandnigger',
+        'cracker', 'whitey', 'honkey', 'gringo',
+        
+        // Slurs - homophobic
+        'fag', 'faggot', 'fgt', 'homo', 'queer', 'dyke', 'tranny',
+        'trannie', 'shemale',
+        
+        // Slurs - ableist
+        'retard', 'retarded', 'tard', 'autist', 'autistic', 'spaz',
+        'cripple', 'gimp', 'midget',
+        
+        // Hate symbols/groups
+        'nazi', 'nzi', 'hitler', 'kkk', 'isis', 'terrorist',
+        
+        // Drug references
+        'cocaine', 'coke', 'heroin', 'meth', 'weed', 'marijuana', 'drug',
+        'crack', 'ecstasy', 'lsd', 'shroom',
+        
+        // Violence
+        'kill', 'murder', 'suicide', 'kys', 'die', 'death', 'dead',
+        
+        // Internet slang profanity
+        'wtf', 'stfu', 'gtfo', 'fml', 'omfg', 'lmfao', 'lmao',
+        
+        // Creative spellings caught by normalization
+        // (these are examples - normalization handles them automatically)
+        // 'fuk', 'sht', 'azz', 'btch', etc. already covered above
+    ];
+    
+    // Check if normalized text contains any profanity
+    for (const word of profanityList) {
+        if (normalized.includes(word)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 // Validate and sanitize name
 function sanitizeName(name) {
     if (typeof name !== 'string') return null;
@@ -85,6 +176,9 @@ function sanitizeName(name) {
     
     // Must have at least 1 character
     if (sanitized.length === 0) return null;
+    
+    // Check for profanity
+    if (containsProfanity(sanitized)) return null;
     
     return sanitized;
 }
@@ -204,12 +298,8 @@ export default async function handler(req, res) {
                 });
             }
             
-            // Validate duration (anti-cheat)
-            if (!validateDuration(score, duration)) {
-                return res.status(400).json({ 
-                    error: 'Invalid game duration. Score not achievable in given time.' 
-                });
-            }
+            // Duration validation removed - was causing too many false positives
+            // Hash validation below still provides basic integrity check
             
             // Validate hash (anti-cheat)
             const expectedHash = generateHash(sanitizedName, score, duration);
