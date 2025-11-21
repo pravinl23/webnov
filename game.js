@@ -38,8 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game Constants
     const GRAVITY = 0.4; // Reduced gravity for floaty feel
     const JUMP_FORCE = -6.5; // Reduced jump force
-    const OBSTACLE_SPEED = 2.5; // Slower speed
-    const OBSTACLE_GAP = 140; // Wider gap
+    const BASE_OBSTACLE_SPEED = 2.5; // Starting speed
+    const SPEED_INCREASE_PER_POINT = 1.0; // Speed increase per score point (faster progression)
+    const MAX_OBSTACLE_SPEED = 12.5; // Speed caps at 5x base speed (score 10)
+    const BASE_OBSTACLE_GAP = 140; // Starting gap
+    const MIN_OBSTACLE_GAP = 100; // Minimum gap at peak difficulty (score 25+)
     const OBSTACLE_INTERVAL = 220; // More space between obstacles
     const PACKET_SIZE = 16;
     const FONT_SIZE = 32; // Size for brackets
@@ -51,6 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let frames = 0;
     let gameLoopId;
     let globalLeaderboard = []; // Store global leaderboard
+
+    // Calculate current obstacle speed based on score
+    function getCurrentSpeed() {
+        const speed = BASE_OBSTACLE_SPEED + (score * SPEED_INCREASE_PER_POINT);
+        return Math.min(speed, MAX_OBSTACLE_SPEED); // Cap at maximum speed (score 15)
+    }
+
+    // Calculate current obstacle gap based on score
+    function getCurrentGap() {
+        if (score < 20) {
+            return BASE_OBSTACLE_GAP; // Keep gap at 140 until score 20
+        } else if (score <= 25) {
+            // Linearly decrease gap from 140 to 100 between scores 20-25
+            const progress = (score - 20) / 5; // 0 to 1 over 5 points
+            return BASE_OBSTACLE_GAP - (progress * (BASE_OBSTACLE_GAP - MIN_OBSTACLE_GAP));
+        } else {
+            return MIN_OBSTACLE_GAP; // Keep at minimum gap after score 25
+        }
+    }
 
     // Fetch Global Leaderboard
     async function fetchLeaderboard() {
@@ -194,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         constructor() {
             this.x = canvas.width;
             this.width = 30; // Approximate width of text
-            this.gapHeight = OBSTACLE_GAP;
+            this.gapHeight = getCurrentGap(); // Use dynamic gap based on score
             this.topHeight = Math.random() * (canvas.height - this.gapHeight - 40) + 20;
             this.pair = bracketPairs[Math.floor(Math.random() * bracketPairs.length)];
             this.passed = false;
@@ -231,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         update() {
-            this.x -= OBSTACLE_SPEED;
+            this.x -= getCurrentSpeed();
         }
     }
 
