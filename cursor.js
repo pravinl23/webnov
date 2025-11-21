@@ -36,6 +36,10 @@ class TargetCursor {
     init() {
         if (this.isMobile()) return;
         
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+        
         this.createCursor();
         this.setupEventListeners();
         

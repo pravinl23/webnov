@@ -50,7 +50,18 @@ function positionLines() {
 }
 
 window.addEventListener('load', positionLines);
-window.addEventListener('resize', positionLines);
+
+// Use ResizeObserver for better performance
+const resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(positionLines);
+});
+
+const sidebar = document.querySelector('.sidebar');
+if (sidebar) {
+    resizeObserver.observe(sidebar);
+    resizeObserver.observe(document.body);
+}
+
 setTimeout(positionLines, 100);
 
 // Navigation functionality

@@ -2,12 +2,16 @@
   "name": "portfolio-website",
   "version": "1.0.0",
   "description": "Pravin",
+  "type": "module",
   "scripts": {
-    "dev": "npx serve . -l 3000",
-    "start": "npx serve . -l 3000"
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.35.6",
+    "express": "^4.18.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC"
 }
-
