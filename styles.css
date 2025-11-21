@@ -217,7 +217,7 @@ body {
 
 .notes-container {
     width: 100%;
-    max-width: 35rem; /* Restored original max-width */
+    max-width: 32rem; /* Restored original max-width */
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -262,7 +262,7 @@ body {
 /* Projects Section */
 .projects-container {
     width: 100%;
-    max-width: 35rem; /* Same max-width as notes container */
+    max-width: 32rem; /* Same max-width as notes container */
     display: flex;
     flex-direction: column;
     gap: 3rem;
