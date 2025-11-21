@@ -12,7 +12,7 @@ const MAX_NAME_LENGTH = 20;
 const RATE_LIMIT_WINDOW = 60; // seconds
 const MAX_SUBMISSIONS_PER_WINDOW = 5; // max submissions per IP per minute
 const SECRET_SALT = 'packet-run-secure-v1'; // Must match client-side salt
-const MIN_MS_PER_SCORE = 1500; // Minimum 1.5 seconds per point (adjust based on game difficulty)
+const MIN_MS_PER_SCORE = 200; // Minimum 0.2 seconds per point (very flexible to avoid rejecting legitimate scores)
 
 // Helper function to call Upstash Redis REST API
 async function redisCommand(command, ...args) {
