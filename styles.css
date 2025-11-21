@@ -16,14 +16,15 @@
     box-sizing: border-box;
 }
 
-html, body {
+html {
+    background-color: #ffebee; /* Light red - html background */
     height: 100%;
     overflow: hidden;
 }
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: hsl(var(--background));
+    background-color: #ffebee; /* Light red - body background */
     color: hsl(var(--foreground));
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -47,7 +48,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: hsl(var(--background));
+    background-color: #e3f2fd; /* Light blue - sidebar */
     z-index: 10;
 }
 
@@ -150,22 +151,48 @@ body {
     height: 100vh;
     overflow-y: auto; /* Allow vertical scrolling */
     overflow-x: hidden;
+    background-color: #fff3e0; /* Light orange - content area */
 }
 
-.notes-container {
+.content-wrapper {
+    display: grid;
+    grid-template-columns: minmax(auto, 45rem) auto; /* Allow text to take full width up to 45rem */
+    gap: 8rem; /* Increased gap for better separation */
     width: 100%;
-    max-width: 45rem; /* Fluid width up to ~720px */
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    /* Removed max-height and overflow to allow natural height */
-    align-self: center;
+    align-items: center;
     margin-top: auto;
     margin-bottom: auto;
 }
 
+.text-column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.game-column {
+    width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.notes-container {
+    width: 100%;
+    max-width: 35rem; /* Restored original max-width */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: #f3e5f5; /* Light purple - notes container */
+    padding: 1rem;
+}
+
 .note {
-    padding: 0;
+    padding: 0.5rem;
+    background-color: #e8f5e9; /* Light green - individual note */
+    border: 1px solid #c8e6c9;
 }
 
 .note-text {
@@ -203,21 +230,147 @@ body {
 /* Projects Section */
 .projects-container {
     width: 100%;
-    max-width: 45rem; /* Fluid width up to ~720px */
+    max-width: 35rem; /* Same max-width as notes container */
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    /* Allow scrolling within content, not just container */
     padding-right: 1rem;
     overflow-x: hidden;
-    padding-right: 1rem;
-    padding-top: 0;
-    align-self: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    background-color: #fce4ec; /* Light pink - projects container */
+    padding: 1rem;
 }
+
+/* Game Widget Styles */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.game-box {
+    /* border: 1px solid hsl(var(--foreground)); */
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: transparent;
+    position: relative; /* For absolute positioning of dropdown */
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: lowercase;
+    color: hsl(var(--foreground));
+    font-family: 'Inter', monospace;
+    height: 24px; /* Fixed height for alignment */
+}
+
+.header-left {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.leaderboard-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: hsl(var(--muted-foreground));
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.leaderboard-toggle:hover {
+    color: hsl(var(--foreground));
+}
+
+.leaderboard-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 1rem;
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden by default */
+    margin-top: 0.5rem;
+}
+
+.leaderboard-dropdown.active {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.game-canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    background-color: transparent;
+    /* Optional: faint dot grid handled in canvas or CSS background */
+    image-rendering: pixelated;
+    border: 1px solid hsl(var(--foreground)); /* Add border to canvas instead of box */
+}
+
+.game-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 0.25rem;
+}
+
+/* Removed .leaderboard styles as they are now inside dropdown or unused */
+
+.leaderboard-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    text-transform: lowercase;
+    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 0.25rem;
+}
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    font-family: 'Inter', monospace;
+}
+
+.leaderboard-item.highlight {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
 
 /* Hide scrollbar for webkit browsers */
 .projects-container::-webkit-scrollbar {
@@ -227,7 +380,10 @@ body {
 }
 
 .project {
-    padding: 0;
+    padding: 0.5rem;
+    background-color: #fff9c4; /* Light yellow - individual project */
+    border: 1px solid #fdd835;
+    margin-bottom: 1rem;
 }
 
 .project-header {
@@ -279,6 +435,34 @@ body {
 }
 
 /* Mobile Responsive */
+@media (max-width: 1024px) {
+    .content-wrapper {
+        flex-direction: column;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .text-column {
+        max-width: 100%;
+    }
+
+    .game-column {
+        width: 100%;
+        max-width: 400px; /* Limit width on tablet/mobile */
+        position: static; /* Remove sticky on mobile */
+        order: 2; /* Ensure game is below text */
+    }
+    
+    .game-box {
+        width: 100%;
+    }
+    
+    #game-canvas {
+        width: 100%;
+        height: auto;
+    }
+}
+
 @media (max-width: 768px) {
     .layout {
         flex-direction: column;
@@ -346,6 +530,11 @@ body {
         min-height: 0;
     }
     
+    .content-wrapper {
+        width: 100%;
+        gap: 2.5rem;
+    }
+
     .notes-container,
     .projects-container {
         max-width: 100%;
