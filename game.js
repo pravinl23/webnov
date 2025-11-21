@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAX_OBSTACLE_SPEED = 10.0; // Speed caps at 4x base speed (score 7-8)
     const BASE_OBSTACLE_GAP = 140; // Starting gap
     const MIN_OBSTACLE_GAP = 100; // Minimum gap at peak difficulty (score 25+)
-    const OBSTACLE_INTERVAL = 220; // More space between obstacles
+    const OBSTACLE_INTERVAL = 150; // Frames between obstacle spawns (horizontal spacing)
     const PACKET_SIZE = 16;
     const FONT_SIZE = 32; // Size for brackets
 
