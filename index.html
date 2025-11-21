@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portfolio Website">
-    <title>Portfolio</title>
+    <title>Pravin Lohani</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="game.js" defer></script>
+    <script src="cursor.js" defer></script>
 </head>
 <body>
     <div class="layout">
@@ -275,7 +282,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <canvas id="game-canvas" width="400" height="533"></canvas>
+                            <div style="position: relative;">
+                                <canvas id="game-canvas" width="400" height="533"></canvas>
+                                <!-- Name Input Overlay -->
+                                <div id="name-input-overlay" class="name-input-overlay" style="display: none;">
+                                    <div class="name-input-container">
+                                        <div class="name-input-title">🎉 You can be on the leaderboard!</div>
+                                        <input type="text" id="name-input" class="name-input" placeholder="Enter your name" maxlength="20" autofocus>
+                                        <div class="name-input-buttons">
+                                            <button id="name-submit-btn" class="name-btn name-btn-primary">Submit</button>
+                                            <button id="name-skip-btn" class="name-btn name-btn-secondary">Skip</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Close Message Overlay -->
+                                <div id="close-message-overlay" class="name-input-overlay" style="display: none;">
+                                    <div class="name-input-container">
+                                        <div class="name-input-title" id="close-message-text">So close!</div>
+                                        <button id="close-message-ok" class="name-btn name-btn-primary">OK</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="game-footer">
                                 <span class="game-instruction">tap / space to hop</span>
                             </div>
@@ -285,8 +312,6 @@
             </div>
         </main>
     </div>
-    <script src="script.js"></script>
-    <script src="game.js"></script>
-    <script src="cursor.js"></script>
+
 </body>
 </html>

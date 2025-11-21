@@ -338,7 +338,7 @@ body {
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius);
     padding: 1rem;
-    z-index: 20;
+    z-index: 50;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: none; /* Hidden by default */
     margin-top: 0.5rem;
@@ -358,6 +358,7 @@ body {
     /* Optional: faint dot grid handled in canvas or CSS background */
     image-rendering: pixelated;
     border: 1px solid hsl(var(--foreground)); /* Add border to canvas instead of box */
+    position: relative; /* So overlay can position relative to canvas */
 }
 
 .game-footer {
@@ -365,6 +366,100 @@ body {
     font-size: 0.75rem;
     color: hsl(var(--muted-foreground));
     margin-top: 0.25rem;
+}
+
+/* Name Input Overlay */
+.name-input-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    border-radius: 0;
+}
+
+.name-input-container {
+    background-color: hsl(var(--background));
+    border: 2px solid hsl(var(--foreground));
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 280px;
+    width: 90%;
+    text-align: center;
+}
+
+.name-input-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    font-family: 'Inter', monospace;
+    text-transform: lowercase;
+}
+
+.name-input {
+    padding: 0.75rem;
+    border: 2px solid hsl(var(--foreground));
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.name-input:focus {
+    border-color: hsl(var(--muted-foreground));
+}
+
+.name-input-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.name-btn {
+    padding: 0.5rem 1.5rem;
+    border: 2px solid hsl(var(--foreground));
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', monospace;
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.name-btn:hover {
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
+}
+
+.name-btn:active {
+    transform: scale(0.95);
+}
+
+.name-btn-primary {
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
+}
+
+.name-btn-primary:hover {
+    background-color: hsl(var(--muted-foreground));
+}
+
+.name-btn-secondary {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
 }
 
 /* Removed .leaderboard styles as they are now inside dropdown or unused */
@@ -397,8 +492,6 @@ body {
 .leaderboard-item.highlight {
     color: hsl(var(--foreground));
     font-weight: 600;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
 }
 
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Local Storage</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #cc0000;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clear Local Storage</h1>
+    <p>This will clear your browser's localStorage cache.</p>
+    <button onclick="clearStorage()">Clear Local Storage</button>
+    <div id="result"></div>
+
+    <script>
+        function clearStorage() {
+            localStorage.removeItem('packetRunGlobalLeaderboard');
+            localStorage.removeItem('packetRunBest');
+            
+            const result = document.getElementById('result');
+            result.className = 'success';
+            result.innerHTML = '✅ Local storage cleared!<br><br>Refresh the main page to see the cleared leaderboard.';
+        }
+    </script>
+</body>
+</html>
