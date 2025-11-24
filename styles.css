@@ -180,7 +180,7 @@ body {
 
 .content-wrapper {
     display: grid;
-    grid-template-columns: minmax(auto, 45rem) auto; /* Allow text to take full width up to 45rem */
+    grid-template-columns: minmax(auto, 32rem) auto; /* Match content max-width */
     gap: 8rem; /* Reduced gap for tighter spacing */
     width: 100%;
     align-items: center;
@@ -266,15 +266,48 @@ body {
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    padding-right: 1rem;
+    padding-right: 0;
     overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 0;
+    padding-bottom: 2rem;
+    /* Height will be set by JS to match about section */
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: -2rem; /* Position below the container */
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+    color: hsl(var(--foreground));
+    transform: translateX(-50%) translateY(2px);
+}
+
+/* Ensure text column has relative positioning for absolute child */
+.text-column {
+    position: relative;
 }
 
 /* Make game fixed and centered on viewport when projects are visible */
 .game-column.fixed-center {
     position: fixed !important;
     top: 50% !important;
-    left: calc(120px + 4rem + 45rem + 8rem) !important;
+    left: calc(120px + 4rem + 32rem + 8rem) !important;
     transform: translateY(-50%) !important;
 }
 
@@ -784,3 +817,7 @@ body {
 .locked-on b {
     cursor: none;
 }
+
+
+
+

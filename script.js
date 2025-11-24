@@ -90,10 +90,21 @@ function initNavigation() {
             if (gameColumn) gameColumn.classList.add('fixed-center');
         }
         
+        // Toggle scroll indicator
+        const scrollIndicator = document.getElementById('scroll-indicator');
+        if (scrollIndicator) {
+            scrollIndicator.style.display = section === 'projects' ? 'flex' : 'none';
+        }
+        
         // Update active state on all links
         navLinks.forEach(link => {
             link.classList.toggle('active', link.dataset.section === section);
         });
+
+        // Sync height after showing section (if projects)
+        if (section === 'projects') {
+            syncProjectHeight();
+        }
     }
 
     // Add click handlers to all nav links
@@ -119,7 +130,99 @@ function initNavigation() {
     
     // Check initial hash
     handleHashChange();
+    
+    // Scroll Indicator Logic
+    const scrollIndicator = document.getElementById('scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', () => {
+            const projectsContainer = document.getElementById('projects-section');
+            if (!projectsContainer) return;
+            
+            const projects = projectsContainer.querySelectorAll('.project');
+            const currentScroll = projectsContainer.scrollTop;
+            const containerTop = projectsContainer.getBoundingClientRect().top;
+            
+            // Find the next project
+            let nextProject = null;
+            
+            // We want to find the first project whose top is significantly below the container top
+            // But since we are scrolling the container, we should check offsetTop relative to container
+            // or just use getBoundingClientRect
+            
+            for (const project of projects) {
+                // Calculate distance from top of container
+                const projectTop = project.getBoundingClientRect().top - containerTop;
+                
+                // If project is below the top (with a small buffer), it's the next one
+                // Buffer of 10px to avoid selecting the current one if it's slightly misaligned
+                if (projectTop > 10) {
+                    nextProject = project;
+                    break;
+                }
+            }
+            
+            if (nextProject) {
+                // Scroll to this project
+                // We use scrollIntoView or manual calculation
+                // Manual calculation is safer for "snap to top"
+                
+                // Calculate target scroll position
+                // target = currentScroll + distance to project
+                // distance = project.getBoundingClientRect().top - containerTop
+                
+                const distance = nextProject.getBoundingClientRect().top - containerTop;
+                
+                projectsContainer.scrollTo({
+                    top: currentScroll + distance,
+                    behavior: 'smooth'
+                });
+            } else {
+                // If no next project (at bottom), maybe scroll to top?
+                // Or just do nothing. User didn't specify loop.
+                // Let's just scroll to top if we are at the very end?
+                // "scrolls to snap the next project to the top everytime"
+                // If we are at the last one, there is no next project.
+            }
+        });
+    }
 }
+
+function syncProjectHeight() {
+    const aboutSection = document.getElementById('about-section');
+    const projectsSection = document.getElementById('projects-section');
+    
+    if (!aboutSection || !projectsSection) return;
+    
+    let height = aboutSection.offsetHeight;
+    
+    // If about section is hidden, we need to temporarily show it to measure
+    if (height === 0 && window.getComputedStyle(aboutSection).display === 'none') {
+        const prevDisplay = aboutSection.style.display;
+        const prevVisibility = aboutSection.style.visibility;
+        const prevPosition = aboutSection.style.position;
+        
+        aboutSection.style.visibility = 'hidden';
+        aboutSection.style.position = 'absolute';
+        aboutSection.style.display = 'flex'; // or block, depending on layout. It was flex in CSS?
+        // checking CSS... .notes-container is flex.
+        
+        height = aboutSection.offsetHeight;
+        
+        aboutSection.style.display = prevDisplay;
+        aboutSection.style.visibility = prevVisibility;
+        aboutSection.style.position = prevPosition;
+    }
+    
+    if (height > 0) {
+        projectsSection.style.height = `${height}px`;
+    }
+}
+
+// Sync on resize
+window.addEventListener('resize', () => {
+    // Debounce slightly or just run
+    requestAnimationFrame(syncProjectHeight);
+});
 
 // Initialize navigation when DOM is ready
 if (document.readyState === 'loading') {
