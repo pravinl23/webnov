@@ -45,6 +45,10 @@ html, body {
     .projects-container {
         overflow: visible;
     }
+    
+    .scroll-indicator {
+        display: none !important;
+    }
 }
 
 body {
@@ -622,6 +626,17 @@ body {
         width: 100%;
         height: auto;
     }
+
+    .scroll-indicator {
+        display: none !important;
+    }
+}
+
+/* Also hide on touch devices regardless of width if they have coarse pointers */
+@media (hover: none) and (pointer: coarse) {
+    .scroll-indicator {
+        display: none !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -633,7 +648,7 @@ body {
         position: relative;
         height: auto;
         width: 100%;
-        padding: 1rem 1.5rem; /* Reduced vertical padding */
+        padding: 0.5rem 1.5rem; /* Reduced vertical padding */
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -661,7 +676,7 @@ body {
         flex-direction: row;
         align-items: center;
         gap: 1.5rem;
-        flex: 0;
+        flex: 1;
         justify-content: flex-end;
     }
     
@@ -672,20 +687,14 @@ body {
     }
     
     .social-line {
-        width: 100px;
-        height: 1px;
-        margin-left: 0;
-        margin-top: 0;
-        position: relative;
-        transform: none;
-        bottom: auto;
+        display: none;
     }
     
     .content {
         margin-left: 0;
         padding: 1.5rem;
         padding-top: 1rem; /* Ensure content starts near top */
-        justify-content: center;
+        justify-content: flex-start;
         align-items: flex-start; /* Align to top */
         flex: 1;
         min-height: 0;
@@ -697,6 +706,8 @@ body {
         width: 100%;
         gap: 2.5rem;
         grid-template-columns: 1fr; /* Single column layout on mobile */
+        margin-top: 0;
+        margin-bottom: 0;
     }
     
     .game-column {
@@ -714,7 +725,7 @@ body {
     }
     
     .projects-container {
-        gap: 2rem;
+        gap: 1rem;
     }
 }
 
@@ -817,6 +828,8 @@ body {
 .locked-on b {
     cursor: none;
 }
+
+
 
 
 
