@@ -7,12 +7,13 @@ const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || 'AYaIAAIncDI1NjI0YzR
 const ADMIN_TOKEN = process.env.LEADERBOARD_ADMIN_TOKEN; // Required for DELETE operations
 
 // Security constants
-const MAX_REASONABLE_SCORE = 10000; // Maximum score we'll accept (adjust based on game difficulty)
+const MAX_REASONABLE_SCORE = 150; // Maximum score we'll accept (realistic game maximum)
 const MAX_NAME_LENGTH = 20;
 const RATE_LIMIT_WINDOW = 60; // seconds
 const MAX_SUBMISSIONS_PER_WINDOW = 5; // max submissions per IP per minute
-const SECRET_SALT = 'packet-run-secure-v1'; // Must match client-side salt
-const MIN_MS_PER_SCORE = 200; // Minimum 0.2 seconds per point (very flexible to avoid rejecting legitimate scores)
+const SECRET_SALT = 'packet-run-secure-v1'; // Must match client-side salt (client can see this, but hash still required)
+const MIN_MS_PER_SCORE = 150; // Minimum 0.15 seconds per point (reasonable for fast gameplay)
+const MIN_DURATION_MS = 500; // Minimum game duration (0.5 seconds) - prevents instant submissions
 
 // Helper function to call Upstash Redis REST API
 async function redisCommand(command, ...args) {
@@ -217,14 +218,27 @@ function validateDuration(score, duration) {
     // Duration must be a positive number
     if (typeof duration !== 'number' || duration < 0) return false;
     
-    // For score 0, any duration is ok
-    if (score === 0) return true;
+    // Minimum duration check - prevents instant submissions
+    if (duration < MIN_DURATION_MS) return false;
     
-    // Check if score is achievable in given time
-    // Each point requires at least MIN_MS_PER_SCORE milliseconds
-    const minRequiredTime = score * MIN_MS_PER_SCORE;
+    // For score 0, just check minimum duration
+    if (score === 0) return duration >= MIN_DURATION_MS;
     
-    return duration >= minRequiredTime;
+    // Score-based time requirements
+    // Lower scores: more lenient (1 point per 150ms)
+    // Higher scores: progressively stricter (skill-based scaling)
+    let minRequiredTime;
+    if (score <= 10) {
+        minRequiredTime = score * MIN_MS_PER_SCORE; // 150ms per point for low scores
+    } else if (score <= 30) {
+        minRequiredTime = (10 * MIN_MS_PER_SCORE) + ((score - 10) * (MIN_MS_PER_SCORE * 1.5)); // 225ms per point for mid scores
+    } else {
+        minRequiredTime = (10 * MIN_MS_PER_SCORE) + (20 * MIN_MS_PER_SCORE * 1.5) + ((score - 30) * (MIN_MS_PER_SCORE * 2)); // 300ms per point for high scores
+    }
+    
+    // Add some tolerance (10% buffer) to account for network/processing delays
+    const tolerance = minRequiredTime * 0.1;
+    return duration >= (minRequiredTime - tolerance);
 }
 
 export default async function handler(req, res) {
@@ -298,10 +312,15 @@ export default async function handler(req, res) {
                 });
             }
             
-            // Duration validation removed - was causing too many false positives
-            // Hash validation below still provides basic integrity check
+            // Validate duration (anti-cheat - prevents impossible scores)
+            if (!validateDuration(score, duration)) {
+                return res.status(400).json({ 
+                    error: 'Invalid game duration. Score cannot be achieved in the reported time.' 
+                });
+            }
             
-            // Validate hash (anti-cheat)
+            // Validate hash (basic integrity check)
+            // Note: Hash can still be replicated by determined cheaters, but duration validation is primary defense
             const expectedHash = generateHash(sanitizedName, score, duration);
             if (hash !== expectedHash) {
                 return res.status(403).json({ 
