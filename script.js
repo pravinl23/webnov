@@ -73,8 +73,6 @@ function initNavigation() {
     if (!navLinks.length || !aboutSection || !projectsSection) return;
 
     function showSection(section) {
-        const gameColumn = document.querySelector('.game-column');
-        
         // Hide all sections
         aboutSection.style.display = 'none';
         projectsSection.style.display = 'none';
@@ -82,12 +80,8 @@ function initNavigation() {
         // Show selected section
         if (section === 'about') {
             aboutSection.style.display = 'flex';
-            // Remove fixed positioning for about page
-            if (gameColumn) gameColumn.classList.remove('fixed-center');
         } else if (section === 'projects') {
             projectsSection.style.display = 'flex';
-            // Add fixed positioning for projects page
-            if (gameColumn) gameColumn.classList.add('fixed-center');
         }
         
         // Toggle scroll indicator
@@ -135,7 +129,8 @@ function initNavigation() {
     const scrollIndicator = document.getElementById('scroll-indicator');
     if (scrollIndicator) {
         scrollIndicator.addEventListener('click', () => {
-            const projectsContainer = document.getElementById('projects-section');
+            const projectsSection = document.getElementById('projects-section');
+            const projectsContainer = projectsSection?.querySelector('.projects-container');
             if (!projectsContainer) return;
             
             const projects = projectsContainer.querySelectorAll('.project');
@@ -190,8 +185,9 @@ function initNavigation() {
 function syncProjectHeight() {
     const aboutSection = document.getElementById('about-section');
     const projectsSection = document.getElementById('projects-section');
+    const projectsContainer = projectsSection?.querySelector('.projects-container');
     
-    if (!aboutSection || !projectsSection) return;
+    if (!aboutSection || !projectsSection || !projectsContainer) return;
     
     let height = aboutSection.offsetHeight;
     
@@ -214,7 +210,7 @@ function syncProjectHeight() {
     }
     
     if (height > 0) {
-        projectsSection.style.height = `${height}px`;
+        projectsContainer.style.height = `${height}px`;
     }
 }
 

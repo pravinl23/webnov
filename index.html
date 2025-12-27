@@ -15,7 +15,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="script.js" defer></script>
-    <script src="game.js" defer></script>
     <script src="cursor.js" defer></script>
     <!-- Vercel Analytics -->
     <script>
@@ -65,7 +64,7 @@
                     <!-- About Section -->
                     <div class="notes-container" id="about-section">
                         <div class="note">
-                            <p class="note-text">Hey, I'm Pravin, <span class="locked-on"><strong>19 years old</strong></span>, originally from <span class="locked-on"><strong>Nepal</strong></span> and now a <span class="locked-on"><strong>Computer Science</strong></span> student @ <span class="locked-on"><strong>University of Waterloo</strong></span>. I wrote my <span class="locked-on"><strong>first line of code at 9 in Lua</strong></span> while messing around in Roblox Studio, and I've been chasing that build-something-from-nothing feeling ever since. From grinding my way to <span class="locked-on"><strong>top-20 globally</strong></span>  in Pokémon Brick Bronze as a kid to now shipping projects that have reached <span class="locked-on"><strong>millions</strong></span> of views, I've always chased the next thing that obsessed me.</p>
+                            <p class="note-text">Hey, I'm Pravin, <span class="locked-on"><strong>19 years old</strong></span>, originally from <span class="locked-on"><strong>Nepal</strong></span> and now a <span class="locked-on"><strong>Computer Science</strong></span> student @ <span class="locked-on"><strong>University of Waterloo</strong></span>. I wrote my <span class="locked-on"><strong>first line of code at 9 in Lua</strong></span> while messing around in Roblox Studio, and I've been chasing that build-something-from-nothing feeling ever since. From grinding my way to <span class="locked-on"><strong>top-20 globally</strong></span>  in Pokémon Brick Bronze as a kid to now shipping projects that have reached over <span class="locked-on"><strong>30 millions</strong></span> views, I've always chased the next thing that obsessed me.</p>
                         </div>
                         
                         <div class="note">
@@ -78,7 +77,8 @@
                     </div>
 
                     <!-- Projects Section -->
-                    <div class="projects-container" id="projects-section" style="display: none;">
+                    <div class="projects-wrapper" id="projects-section" style="display: none;">
+                        <div class="projects-container">
                         <div class="project">
                             <div class="project-header">
                                 <a href="https://github.com/pravinl23/halftime" target="_blank" rel="noopener noreferrer" class="project-title cursor-target">
@@ -106,7 +106,7 @@
                                 </a>
                             </div>
                             <p class="project-tagline">Cursor for Minecraft</p>
-                            <p class="project-description">Minecraft Forge mod that turns everyday natural-language prompts into fully coordinated in-game workers that mine, build, and automate tasks, reaching <span class="locked-on"><strong>5M+ views</strong></span> and <span class="locked-on"><strong>900+ GitHub Stars</strong></span> in under a week.</p>
+                            <p class="project-description">Minecraft Forge mod that turns everyday natural-language prompts into fully coordinated in-game workers that mine, build, and automate tasks, reaching <span class="locked-on"><strong>5M+ views</strong></span> and <span class="locked-on"><strong>1.1k+ GitHub Stars</strong></span> in under a week.</p>
                         </div>
 
                         <div class="project">
@@ -288,66 +288,13 @@
                             <p class="project-tagline">Playground for emergent swarms</p>
                             <p class="project-description">Real-time visual simulator of flocking behavior where thousands of agents follow simple local rules (separation, alignment, cohesion) to produce complex, satisfying swarm patterns you can tweak live.</p>
                         </div>
-                    </div>
-                    <!-- Scroll Indicator -->
-                    <button id="scroll-indicator" class="scroll-indicator" aria-label="Scroll to next project" style="display: none;">
-                        <svg width="40" height="12" viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 2L20 10L38 2"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="game-column">
-                    <div class="game-container">
-                        <div class="game-box">
-                            <div class="game-header">
-                                <div class="header-left">
-                                    <span class="game-score">score 0 | best <span id="best-score">0</span></span>
-                                </div>
-                                <div class="header-right">
-                                    <button id="leaderboard-toggle" class="leaderboard-toggle" aria-label="Toggle Leaderboard">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                                            <path d="M4 22h16"></path>
-                                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                                        </svg>
-                                    </button>
-                                    <div class="leaderboard-dropdown" id="leaderboard-dropdown">
-                                        <div class="leaderboard-title">leaderboard</div>
-                                        <ul class="leaderboard-list" id="leaderboard-list">
-                                            <!-- Leaderboard items will be injected here -->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="position: relative;">
-                                <canvas id="game-canvas" width="400" height="533"></canvas>
-                                <!-- Name Input Overlay -->
-                                <div id="name-input-overlay" class="name-input-overlay" style="display: none;">
-                                    <div class="name-input-container">
-                                        <div class="name-input-title">🎉 You can be on the leaderboard!</div>
-                                        <input type="text" id="name-input" class="name-input" placeholder="Enter your name" maxlength="20" autofocus>
-                                        <div class="name-input-buttons">
-                                            <button id="name-submit-btn" class="name-btn name-btn-primary">Submit</button>
-                                            <button id="name-skip-btn" class="name-btn name-btn-secondary">Skip</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Close Message Overlay -->
-                                <div id="close-message-overlay" class="name-input-overlay" style="display: none;">
-                                    <div class="name-input-container">
-                                        <div class="name-input-title" id="close-message-text">So close!</div>
-                                        <button id="close-message-ok" class="name-btn name-btn-primary">OK</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="game-footer">
-                                <span class="game-instruction">tap / space to hop</span>
-                            </div>
                         </div>
+                        <!-- Scroll Indicator -->
+                        <button id="scroll-indicator" class="scroll-indicator" aria-label="Scroll to next project" style="display: none;">
+                            <svg width="40" height="12" viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 2L20 10L38 2"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
